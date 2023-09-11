@@ -19,6 +19,7 @@ function createBoard(){
         const square = document.createElement('div');
         square.classList.add('square');
         square.innerHTML = piece;
+        square.firstChild?.setAttribute('draggable',true);
         square.setAttribute('square-id', i);
 
         const row = Math.floor((63 - i) / 8) + 1;
@@ -28,10 +29,44 @@ function createBoard(){
         }else{
             square.classList.add(i % 2==0? "brown" : "beige")
         }
+
+        if(i <= 15){
+            square.firstChild.firstChild.classList.add('black');
+        }else if(i>=48){
+            square.firstChild.firstChild.classList.add('white');
+        }
+
+
         
 
         chessBoard.append(square);
     });
 }
 
-createBoard()
+createBoard();
+
+const allSquares = document.querySelectorAll("#chessboard .square");
+
+allSquares.forEach(square=>{
+    square.addEventListener('dragstart',dragStart);
+    square.addEventListener('dragover',dragOver);
+    square.addEventListener('dragdrop',dragDrop);
+});
+
+let startPositionId;
+let draggedElement;
+
+function dragStart(e){
+    startPositionId = e.target.parentNode.getAttribute('square-id');
+    draggedElement =  e.target;
+}
+
+function dragOver(e){
+    e.preventDefault();
+    console.log(e);
+}
+
+//TO DO
+function dragDrop(){
+
+}

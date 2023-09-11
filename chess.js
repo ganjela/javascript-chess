@@ -15,10 +15,21 @@ const pieces = [
 ]
 
 function createBoard(){
-    pieces.forEach((piece)=>{
+    pieces.forEach((piece,i)=>{
         const square = document.createElement('div');
         square.classList.add('square');
-        square.classList.add('beige');
+        square.innerHTML = piece;
+        square.setAttribute('square-id', i);
+
+        const row = Math.floor((63 - i) / 8) + 1;
+
+        if(row % 2 == 0){
+            square.classList.add(i % 2==0? "beige" : "brown")
+        }else{
+            square.classList.add(i % 2==0? "brown" : "beige")
+        }
+        
+
         chessBoard.append(square);
     });
 }
